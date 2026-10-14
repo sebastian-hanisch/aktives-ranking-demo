@@ -107,6 +107,8 @@ def test_verdicts_quote_the_measured_numbers(main, narrow, rounds):
     assert "**Sieger richtig** 0,73 gegen 0,60 beim Rundenturnier und 0,68 beim Schweizer System" in ev.verdict_budget(main)[1]
     assert "braucht ebenso viele Partien wie das feste Rundenturnier" in t and "spart 25 %" in t
     n = ev.verdict_narrow(narrow)[1]
-    assert "Rundenturnier 28, bei der Information-Regel 25, bei der naiven Regel 52" in n and "gleichauf mit dem Rundenturnier" in n and "Die naive Regel liegt hinter allen anderen" in n
+    # ein Lauf liegt je nach Plattform (Gleitkomma) auf der anderen Seite von 0,90: Rundenturnier 28 (Windows) oder 29 (Linux)
+    assert ("Rundenturnier 28, " in n or "Rundenturnier 29, " in n) and "bei der Information-Regel 25, bei der naiven Regel 52" in n
+    assert "gleichauf mit dem Rundenturnier" in n and "Die naive Regel liegt hinter allen anderen" in n
     r = ev.verdict_rounds(list(rounds.values()))[1]
     assert "0,944" in r and "0,935" in r and "90 gegen 96" in r

@@ -1,5 +1,7 @@
 # Aktives Ranking: welche Paarung als Nächstes? – Streamlit-Demo
 
+**[→ Demo live ausprobieren](https://sebastianhanisch-aktives-ranking-demo.streamlit.app/)**
+
 Zwölftes Stück der **Ranking-Linie** (Konzepte-Demo), Nachfolger von `bradley-terry-demo`, `glicko-trueskill-demo` und `nicht-transitiv-demo`: Ein fester Spielplan spielt jedes Paar gleich
 oft, obwohl manche Paare nach wenigen Partien klar entschieden sind und andere nicht. Das **aktive Ranking** wählt die nächste Partie nach der Unsicherheit der Rangfolge. Gemessen wird,
 **wie viele Partien das spart** gegen das Rundenturnier, die zufällige Paarung und ein vereinfachtes Schweizer System, **warum die naheliegende Regel das Budget verschwendet**, **wann es
@@ -131,4 +133,4 @@ Gebaut mit Streamlit, Plotly, numpy, pandas und fpdf2.
 
 ---
 
-Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zu den Demos: [Interaktive Demos](https://sebastianhanisch.net/demos.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Ranking: von der Siegtabelle bis Learning to Rank](https://sebastianhanisch.net/konzepte-ranking.html).

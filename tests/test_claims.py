@@ -81,7 +81,7 @@ def test_a_narrow_field_gives_the_active_rule_no_advantage(narrow):
     assert med[AF] == C.NOT_REACHED and all(med[k] < C.NOT_REACHED for k in (RR, RND, SW, AI))
     assert narrow[AF]["not_reached"] == pytest.approx(52, abs=6)
     for k in (RR, RND, SW, AI):
-        assert narrow[k]["not_reached"] == pytest.approx(26, abs=6) and 0.35 <= narrow[k]["not_reached"] / len(C.SWEEP_SEEDS) <= 0.55, k   # „rund jeder zweite“
+        assert narrow[k]["not_reached"] == pytest.approx(26, abs=6) and 0.35 <= narrow[k]["not_reached"] / len(C.SWEEP_SEEDS) <= 0.55, k   # „gut zwei von fünf“
     assert narrow[AF]["not_reached"] > narrow[AI]["not_reached"] + 15
     at = {k: narrow[k]["at"][240]["accuracy"] for k in C.STRATEGIES}
     assert (at[RR], at[RND], at[SW], at[AF], at[AI]) == pytest.approx((0.828, 0.825, 0.823, 0.775, 0.828), abs=0.008)
@@ -103,7 +103,7 @@ def test_verdicts_quote_the_measured_numbers(main, narrow, rounds):
     t = ev.verdict_target(main)[1]
     assert "Rundenturnier **120**" in t and "Aktiv: Information **90**" in t
     c = ev.verdict_concentration(main)[1]
-    assert "bis zu **145 Mal**" in c and "(Information-Regel 26, Rundenturnier 8)" in c
+    assert "im Mittel über die Läufe das meistgespielte Paar **145 Mal**" in c and "(Information-Regel 26, Rundenturnier 8)" in c
     assert "**Sieger richtig** 0,73 gegen 0,60 beim Rundenturnier und 0,68 beim Schweizer System" in ev.verdict_budget(main)[1]
     assert "braucht ebenso viele Partien wie das feste Rundenturnier" in t and "spart 25 %" in t
     n = ev.verdict_narrow(narrow)[1]

@@ -4,18 +4,18 @@
 
 Zwölftes Stück der **Ranking-Linie** (Konzepte-Demo), Nachfolger von `bradley-terry-demo`, `glicko-trueskill-demo` und `nicht-transitiv-demo`: Ein fester Spielplan spielt jedes Paar gleich
 oft, obwohl manche Paare nach wenigen Partien klar entschieden sind und andere nicht. Das **aktive Ranking** wählt die nächste Partie nach der Unsicherheit der Rangfolge. Gemessen wird,
-**wie viele Partien das spart** gegen das Rundenturnier, die zufällige Paarung und ein vereinfachtes Schweizer System, **warum die naheliegende Regel das Budget verschwendet**, **wann es
-nichts zu gewinnen gibt** und was **parallele Runden** kosten. Das Vehikel ist das neutrale, simulierte Turnier der Wurzel (Stärken aus dem Generator Version 1, wortgleich); alles ist
+**wie viele Partien das spart** gegen das Rundenturnier, die zufällige Paarung und ein vereinfachtes Schweizer System, **warum die naheliegende Regel die Partien konzentriert**, **wann es
+kaum etwas zu gewinnen gibt** und was **parallele Runden** kosten. Das Vehikel ist das neutrale, simulierte Turnier der Wurzel (Stärken aus dem Generator Version 1, wortgleich); alles ist
 simuliert, es gibt keinen echten Datensatz.
 
 ## Kernfrage
 
-Wie viele Partien spart die aktive Paarung? **Etwa ein Viertel:** 12 Spieler, Stärkeabstand 0,3, Median der Partien bis zum Paartreffer 0,90 bei der Information-Regel **90** gegen **120**
-beim Rundenturnier (**25 %**), gleichauf mit dem vereinfachten Schweizer System (96). Die zufällige Paarung braucht ebenso viele Partien wie das Rundenturnier (120). Bei festem Budget ist der
-Vorsprung klein, aber stetig: Paartreffer **0,944** gegen 0,929 nach 240 Partien; der **wahre Beste** steht in 0,73 der Läufe oben gegen 0,60. **Die naheliegende Regel verschwendet das Budget:**
-Wer immer das Paar mit der größten Fehlordnungswahrscheinlichkeit spielt, spielt dasselbe Paar bis zu **145 Mal** (Information-Regel 26, Rundenturnier 8), 86 % ihrer Partien gehen zwischen
-nahen Nachbarn, und bei engem Feld (Abstand 0,12) liegt sie hinter allen anderen (0,775 gegen 0,828 nach 240 Partien). **Bei engem Feld gewinnt auch die Information-Regel nichts:** gleichauf
-mit dem Rundenturnier (0,828); rund jeder zweite Lauf erreicht 0,90 in 480 Partien nicht. Parallele Runden (6 Paare je Runde) kosten rund 0,01 Paartreffer.
+Wie viele Partien spart die aktive Paarung? **Etwa ein Fünftel bis ein Viertel:** 12 Spieler, Stärkeabstand 0,3, Median der Partien bis zum Paartreffer 0,90 bei der Information-Regel **90** gegen **120**
+beim Rundenturnier (Median **25 %**, Mittel 101 gegen 127: 21 %), gleichauf mit dem vereinfachten Schweizer System (96). Die zufällige Paarung ist vom Rundenturnier nicht unterscheidbar (beide Median 120). Bei festem Budget ist der
+Vorsprung klein, aber stetig: Paartreffer **0,944** gegen 0,929 nach 240 Partien; der **wahre Beste** steht in 0,73 der Läufe oben gegen 0,60 (Differenz 0,13 ± 0,09, nicht gesichert). **Die naheliegende Regel konzentriert die Partien:**
+Wer das Paar mit der größten Fehlordnungswahrscheinlichkeit spielt, spielt im Mittel das meistgespielte Paar **145 Mal** (je nach Lauf 61 bis 319; Information-Regel 26, Rundenturnier 8), 86 % ihrer Partien gehen zwischen
+nahen Nachbarn, und bei engem Feld (Abstand 0,12) liegt sie nach 240 Partien hinter allen anderen (0,775 gegen 0,828). **Bei engem Feld ist in 60 Läufen kein Vorsprung der Information-Regel messbar:** gleichauf
+mit dem Rundenturnier (0,828); gut zwei von fünf Läufen (42 bis 47 %) erreichen 0,90 in 480 Partien nicht, bei der naiven Regel 87 %. Parallele Runden (6 Paare je Runde) kosten rund 0,01 Paartreffer.
 
 ## Modell
 
@@ -33,10 +33,10 @@ mit dem Rundenturnier (0,828); rund jeder zweite Lauf erreicht 0,90 in 480 Parti
 ## Methodik
 
 - **Experimente** über 60 feste Läufe (`SWEEP_SEEDS`, nie ein einzelner Seed), je mit einem live berechneten Verdikt; feste Instanz mit 12 Spielern, Stärkeabstand 0,3, 480 Partien, λ = 0,1,
-  unabhängig vom Regler. Die Zahlen sind plattformunabhängig (der Generator hängt nur von Seed und Position ab).
-- **Gleiche Würfe:** Alle Strategien einer Instanz sehen dieselben Stärken, dieselben Ausgänge je Partienummer und denselben Gleichstandsbrecher.
+  unabhängig vom Regler. Die Zufallszahlen sind plattformunabhängig (der Generator hängt nur von Seed und Position ab); einzelne Zählwerte an der Schwelle 0,90 können sich um einen Lauf verschieben.
+- **Gleiche Würfe:** Alle Strategien einer Instanz sehen dieselben Stärken, dieselben Würfe je Partienummer (der Ausgang hängt zusätzlich vom gespielten Paar ab) und denselben Gleichstandsbrecher.
 - **Zufall:** `turnier_generator.py` mit SplitMix64-Strom (wortgleich mit den Repos der Linie).
-- **Erster Aufruf:** Die drei Läufe über die 60 Instanzen (Hauptexperiment, enges Feld, Runden) rechnen etwa eine Minute und werden danach zwischengespeichert.
+- **Erster Aufruf:** Die drei Läufe über die 60 Instanzen (Hauptexperiment, enges Feld, Runden) rechnen etwa zwei bis drei Minuten (maschinenabhängig) und werden danach zwischengespeichert.
 
 ## Befunde (gemessen, keine Behauptungen)
 
@@ -45,15 +45,15 @@ Alle Zahlen: 60 feste Läufe, 12 Spieler, δ = 0,3, 480 Partien, λ = 0,1, wo ni
 | Frage | Befund | Test |
 |---|---|---|
 | Median der Partien bis Paartreffer 0,90 | Rundenturnier **120**, Zufällig **120**, Schweizer **96**, Fehlordnung **126**, Information **90**; Ersparnis der Information-Regel 25 %; Läufe ohne Erreichen: nur Fehlordnung (2 von 60). | `test_games_to_the_target` |
-| Paartreffer nach 60 / 120 / 240 / 480 Partien | Rundenturnier 0,846 / 0,892 / 0,929 / 0,958; Information **0,859 / 0,912 / 0,944 / 0,971**; Schweizer 0,855 / 0,900 / 0,937 / 0,960; Fehlordnung 0,860 / 0,904 / 0,937 / 0,967; Zufällig 0,841 / 0,891 / 0,926 / 0,959. Vorsprung der Information-Regel nach 120 und 240 Partien über 0,01. | `test_accuracy_at_fixed_budgets` |
-| Sieger richtig nach 240 Partien; Top-3 nach 120 | **0,73** (Information) gegen 0,60 (Rundenturnier), 0,68 (Schweizer), 0,77 (Fehlordnung); nach 60 Partien 0,53 gegen 0,42; Top-3 nach 120: 0,83 gegen 0,81. | `test_winner_and_top_three` |
-| Konzentration nach 480 Partien | größte Zahl Partien eines Paares: Fehlordnung **145**, Information 26, Zufällig 14, Schweizer 11, Rundenturnier 8; Anteil der Nachbarpartien 0,86 / 0,64 / 0,33 / 0,34 / 0,32. | `test_the_naive_rule_concentrates_the_games` |
+| Paartreffer nach 60 / 120 / 240 / 480 Partien | Rundenturnier 0,846 / 0,892 / 0,929 / 0,958; Information **0,859 / 0,912 / 0,944 / 0,971**; Schweizer 0,855 / 0,900 / 0,937 / 0,960; Fehlordnung 0,860 / 0,904 / 0,937 / 0,967; Zufällig 0,841 / 0,891 / 0,926 / 0,959. Vorsprung der Information-Regel gegen das Rundenturnier nach 120 und 240 Partien über 0,01 (gegen das Schweizer System nach 240 Partien 0,007). | `test_accuracy_at_fixed_budgets` |
+| Sieger richtig nach 240 Partien; Top-3 nach 120 | **0,73** (Information) gegen 0,60 (Rundenturnier), 0,68 (Schweizer), 0,77 (Fehlordnung); nach 60 Partien 0,53 gegen 0,42; Top-3 nach 120: 0,83 gegen 0,81. Der Abstand beim Sieger (0,13 ± 0,09) ist mit 60 Läufen nicht gesichert, der bei Top-3 (0,02 ± 0,04) klein. | `test_winner_and_top_three` |
+| Konzentration nach 480 Partien | größte Zahl Partien eines Paares, Mittel über die Läufe (Fehlordnung je nach Lauf 61 bis 319): Fehlordnung **145**, Information 26, Zufällig 14, Schweizer 11, Rundenturnier 8; Anteil der Nachbarpartien 0,86 / 0,64 / 0,33 / 0,34 / 0,32. | `test_the_naive_rule_concentrates_the_games` |
 | Enges Feld (Abstand 0,12) | Paartreffer nach 240 Partien: Rundenturnier 0,828, Zufällig 0,825, Schweizer 0,823, Information **0,828**, Fehlordnung **0,775**; Läufe ohne Erreichen von 0,90 in 480 Partien: 28 / 26 / 25 / 25 / **52** von 60 (beim Rundenturnier 29 auf dem Linux-Läufer der CI: ein einzelner Lauf fällt je nach Plattform auf die andere Seite von 0,90). | `test_a_narrow_field_gives_the_active_rule_no_advantage` |
 | Runden (Information-Regel) 1 / 3 / 6 Paare je Runde | Paartreffer nach 240 Partien **0,944 / 0,939 / 0,935**, nach 120 Partien 0,912 / 0,909 / 0,902; Median bis 0,90: 90 / 96 / 96. | `test_parallel_rounds_cost_a_little` |
 | Verdikte nennen dieselben Zahlen | Die live berechneten Texte der App geben die obigen Werte wieder. | `test_verdicts_quote_the_measured_numbers` |
 
 Die Reihenfolge der drei besten Regeln untereinander ist beim Paartreffer eng (0,937 / 0,937 / 0,944 nach 240 Partien) und bei „Sieger richtig“ mit 60 Läufen **nicht belastbar**
-(Standardfehler rund 0,06): Belastbar ist „aktiv vor Rundenturnier“ bei der Spitze, nicht die Rangfolge der aktiven Regeln.
+(Standardfehler rund 0,06): Auch „aktiv vor Rundenturnier“ ist bei der Spitze mit 60 Läufen nicht gesichert (Richtung konsistent); gesichert ist nur der kleine Vorsprung beim Paartreffer (0,015 ± 0,004 nach 240 Partien), nicht die Rangfolge der aktiven Regeln.
 
 ## Befunde und Korrekturen gegenüber dem Plan
 
@@ -61,9 +61,9 @@ Die Reihenfolge der drei besten Regeln untereinander ist beim Paartreffer eng (0
   Schätzungen liefen auf Werte um ±2000. Entdeckt hat es der Orakel-Test `test_with_many_games_every_strategy_recovers_the_true_order` (Schweizer System nach 600 Partien nur 0,867
   statt über 0,95). **Behoben** mit Rückwärtsschritt (gedämpftes Newton-Verfahren, geprüft gegen den BFGS von scipy und mit `test_newton_does_not_diverge_for_separable_data_and_a_small_prior`).
 - **Zwei Aussagen der Vorab-Messung fielen weg**, weil sie am Schätzfehler hingen: (1) „die zufällige Paarung ist schlechter als das Rundenturnier“ (156 gegen 120 Partien; gemessen sind
-  **120 gegen 120**), (2) „bei engem Feld erreicht niemand 0,90“ (Rundenturnier 0,804, Zufällig 0,760 nach 240 Partien; gemessen **0,828 und 0,825**, und rund jeder zweite Lauf erreicht 0,90).
+  **120 gegen 120**), (2) „bei engem Feld erreicht niemand 0,90“ (Rundenturnier 0,804, Zufällig 0,760 nach 240 Partien; gemessen **0,828 und 0,825**, und bei den Regeln außer der naiven erreicht gut die Hälfte der Läufe 0,90).
   Geblieben ist: die naive Regel liegt bei engem Feld hinter allen anderen.
-- **Die Ersparnis ist ein Viertel, nicht ein Drittel:** Der Entwurf des Preset-Textes sagte „etwa ein Drittel“; gemessen sind 25 % (90 gegen 120 Partien).
+- **Die Ersparnis ist im Median ein Viertel, nicht ein Drittel:** Der Entwurf des Preset-Textes sagte „etwa ein Drittel“; gemessen sind 25 % (Median 90 gegen 120 Partien; im Mittel 21 %).
 - Die Zahlen verschieben sich um wenige Hundertstel gegen die Vorab-Messung (60 statt 30 Läufe, SplitMix64-Strom).
 
 ## Abgrenzung
@@ -93,7 +93,7 @@ Die Reihenfolge der drei besten Regeln untereinander ist beim Paartreffer eng (0
 
 ## Tests
 
-88 Tests, gut eine Minute (nach dem ersten Aufruf der Läufe; die AppTest-Rauchtests rechnen die Experimente einmal) (die Experimente rechnen über 60 feste Läufe): Einheiten gegen Handwerte (`test_model.py`: Schätzer, Laplace-Kovarianz, Paartreffer, Sieger, Auswahlwerte;
+111 Tests, rund vier Minuten auf einer ausgelasteten Maschine (nach dem ersten Aufruf der Läufe; die AppTest-Rauchtests rechnen die Experimente einmal) (die Experimente rechnen über 60 feste Läufe): Einheiten gegen Handwerte (`test_model.py`: Schätzer, Laplace-Kovarianz, Paartreffer, Sieger, Auswahlwerte;
 `test_strategies.py`: Läufe, Paarungen, Schweizer System), Generator (`test_generator.py`, wortgleich), **Orakel** (`test_oracle_aktives_ranking.py`: Schätzer gegen den BFGS von scipy,
 Laplace-Kovarianz gegen finite Differenzen der Hesse-Matrix, Paarwahl gegen eine skalare Aufzählung mit `math.erfc`, Eigenschaften der Strategien über feste Läufe), Maße und Verdikte
 (`test_evaluation.py`), alle Zahlen dieses README (`test_claims.py`), Presets, Szenario und PDF (`test_presets.py`), Laufzeit-Importe und AppTest-Rauchtests.

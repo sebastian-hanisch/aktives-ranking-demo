@@ -37,8 +37,8 @@ PRESETS = {
     "Die naive Regel": {**_BASE, "strategy": STRATEGIES[3], "budget": 240},
 }
 PRESET_HELP = {
-    "Rundenturnier gegen aktiv": "12 Spieler, 120 Partien: Die Information-Regel erreicht denselben Paartreffer mit etwa einem Viertel weniger Partien als das feste Rundenturnier.",
+    "Rundenturnier gegen aktiv": "12 Spieler, 120 Partien: Die Information-Regel erreicht denselben Paartreffer im Median mit etwa einem Viertel weniger Partien als das feste Rundenturnier.",
     "Wenige Partien": "Nur 60 Partien (5 je Spieler): Der Unterschied zwischen den Strategien ist klein, aber „Sieger richtig“ ist bei der aktiven Paarung häufiger.",
-    "Enges Feld": "Stärkeabstand 0,12: Es gibt kaum etwas zu trennen: rund jeder zweite Lauf erreicht den Paartreffer 0,90 in 480 Partien nicht, und die aktive Paarung hat keinen Vorsprung.",
-    "Die naive Regel": "Immer die Paarung mit der größten Fehlordnungswahrscheinlichkeit: Sie spielt dieselben Nachbarn immer wieder, das Budget wird verschwendet.",
+    "Enges Feld": "Stärkeabstand 0,12: Es gibt kaum etwas zu trennen: gut zwei von fünf Läufen erreichen den Paartreffer 0,90 in 480 Partien nicht, und in 60 Läufen ist kein Vorsprung der aktiven Paarung messbar.",
+    "Die naive Regel": "Immer die Paarung mit der größten Fehlordnungswahrscheinlichkeit: Sie konzentriert die Partien auf wenige Nachbarpaare; bei engem Feld kostet das Genauigkeit.",
 }

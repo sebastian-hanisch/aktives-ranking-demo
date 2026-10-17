@@ -41,11 +41,11 @@ def _fake(final_ri, final_ai, conc=None):
 
 
 def test_verdict_flags_no_measurable_gain_only_for_a_small_difference():
-    assert "nichts Messbares" in ev.verdict_analysis(_fake(0.90, 0.905))[1]
-    assert "nichts Messbares" in ev.verdict_analysis(_fake(0.90, 0.895))[1]
-    assert "nichts Messbares" not in ev.verdict_analysis(_fake(0.90, 0.92))[1]
-    assert "nichts Messbares" in ev.verdict_analysis(_fake(0.90, 0.909))[1]
-    assert "nichts Messbares" not in ev.verdict_analysis(_fake(0.90, 0.911))[1]
+    assert "um weniger als 0,01" in ev.verdict_analysis(_fake(0.90, 0.905))[1]
+    assert "um weniger als 0,01" in ev.verdict_analysis(_fake(0.90, 0.895))[1]
+    assert "um weniger als 0,01" not in ev.verdict_analysis(_fake(0.90, 0.92))[1]
+    assert "um weniger als 0,01" in ev.verdict_analysis(_fake(0.90, 0.909))[1]
+    assert "um weniger als 0,01" not in ev.verdict_analysis(_fake(0.90, 0.911))[1]
 
 
 def test_verdict_names_the_best_strategy_and_the_most_concentrated_pair():

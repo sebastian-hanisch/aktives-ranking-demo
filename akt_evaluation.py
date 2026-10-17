@@ -56,7 +56,7 @@ def verdict_analysis(a: Analysis):
     text += f"Die größte Zahl Partien eines Paares: {int(a.conc[top_conc][0])} bei „{top_conc}“ (Rundenturnier: {int(a.conc['Rundenturnier'][0])})."
     gain = a.final["Aktiv: Information"][0] - ref
     if abs(gain) < 0.01:
-        text += " **Bei diesem Budget und diesem Stärkeabstand bringt die aktive Paarung gegen das Rundenturnier nichts Messbares.**"
+        text += " **In diesem einen Lauf unterscheiden sich die Paartreffer von Information-Regel und Rundenturnier um weniger als 0,01** (ein Lauf sagt wenig; die Experimente unten mitteln über 60)."
     return "info", text
 
 
@@ -120,15 +120,15 @@ def verdict_budget(main):
     a240 = {k: v["at"][240] for k, v in main.items()}
     return "info", (f"Nach 240 Partien: Paartreffer " + ", ".join(f"{_short(k)} {de(a240[k]['accuracy'], 3)}" for k in C.STRATEGIES) + f"; **Sieger richtig** {de(a240['Aktiv: Information']['winner'])} "
                     f"gegen {de(a240['Rundenturnier']['winner'])} beim Rundenturnier und {de(a240['Schweizer System (vereinfacht)']['winner'])} beim Schweizer System. Der Vorsprung der aktiven Paarung "
-                    "liegt bei der Spitze, weniger bei der ganzen Rangfolge.")
+                    "scheint bei der Spitze größer zu sein als bei der ganzen Rangfolge (mit 60 Läufen nicht gesichert).")
 
 
 def verdict_concentration(main):
     f, i = main["Aktiv: Fehlordnung"], main["Aktiv: Information"]
     r = main["Rundenturnier"]
-    return "warning", (f"Die naive Regel spielt dasselbe Paar bis zu **{de(f['max_pair'], 0)} Mal** (Information-Regel {de(i['max_pair'], 0)}, Rundenturnier {de(r['max_pair'], 0)}), "
+    return "warning", (f"Die naive Regel spielt im Mittel über die Läufe das meistgespielte Paar **{de(f['max_pair'], 0)} Mal** (Information-Regel {de(i['max_pair'], 0)}, Rundenturnier {de(r['max_pair'], 0)}), "
                        f"{pct(f['near_share'])} % ihrer Partien gehen zwischen Spielern mit Rangabstand höchstens {C.NEIGHBOUR_GAP} (Rundenturnier {pct(r['near_share'])} %). "
-                       "Wer immer das unsicherste Paar wählt, verschwendet das Budget auf Paare, die sich kaum trennen lassen.")
+                       "Die naive Regel konzentriert die Partien auf wenige Nachbarpaare, die sich kaum trennen lassen; bei engem Feld kostet das Genauigkeit (Experiment 4).")
 
 
 def verdict_narrow(main_narrow):
@@ -136,12 +136,12 @@ def verdict_narrow(main_narrow):
     a = {k: v["at"][240]["accuracy"] for k, v in main_narrow.items()}
     runs = len(C.SWEEP_SEEDS)
     gain = a["Aktiv: Information"] - a["Rundenturnier"]
-    tail = ("Die Information-Regel liegt gleichauf mit dem Rundenturnier: Wo es kaum etwas zu trennen gibt, hilft die aktive Paarung nicht. "
+    tail = ("Die Information-Regel liegt gleichauf mit dem Rundenturnier: Wo es kaum etwas zu trennen gibt, ist in diesen Läufen kein Vorteil der aktiven Paarung messbar. "
             if abs(gain) <= 0.01 else
             ("Die Information-Regel liegt vor dem Rundenturnier. " if gain > 0 else "Die Information-Regel liegt hinter dem Rundenturnier. "))
     worst = "Aktiv: Fehlordnung"
     tail += ("Die naive Regel liegt hinter allen anderen." if all(a[worst] < a[k] for k in C.STRATEGIES if k != worst) else "")
-    return "warning", (f"Bei engem Feld (Abstand {de(C.DELTA_NARROW)}) erreicht in {C.EXP_BUDGET} Partien rund jeder zweite Lauf den Paartreffer {de(C.TARGET)} nicht: Läufe ohne Erreichen von {runs} "
+    return "warning", (f"Bei engem Feld (Abstand {de(C.DELTA_NARROW)}) erreicht in {C.EXP_BUDGET} Partien ein großer Teil der Läufe den Paartreffer {de(C.TARGET)} nicht: Läufe ohne Erreichen von {runs} "
                        f"beim Rundenturnier {nr['Rundenturnier']}, bei der Information-Regel {nr['Aktiv: Information']}, bei der naiven Regel {nr['Aktiv: Fehlordnung']}. Paartreffer nach 240 "
                        f"Partien: " + ", ".join(f"{_short(k)} {de(a[k], 3)}" for k in C.STRATEGIES) + ". " + tail)
 
@@ -151,10 +151,10 @@ def verdict_rounds(rows):
     lo, hi = r[min(r)], r[max(r)]
     return "info", (f"Mit {min(r)} Paar je Runde (nacheinander) erreicht die Information-Regel nach 240 Partien {de(lo['at240'], 3)}, mit {max(r)} Paaren je Runde (parallel) {de(hi['at240'], 3)}; "
                     f"Median der Partien bis {de(C.TARGET)}: {int(lo['to_target_median'])} gegen {int(hi['to_target_median'])}. Parallele Runden kosten Partien, weil spätere Paare die Ergebnisse "
-                    "der Runde nicht kennen.")
+                    "der Runde nicht kennen und spielerfremd gewählt werden müssen.")
 
 
 def verdict_top(main):
     t = {k: v["at"][120] for k, v in main.items()}
     return "info", (f"Nach 120 Partien: Top-3-Treffer " + ", ".join(f"{_short(k)} {de(t[k]['top3'])}" for k in C.STRATEGIES) + f"; Sieger richtig {de(t['Aktiv: Information']['winner'])} bei der "
-                    f"Information-Regel, {de(t['Rundenturnier']['winner'])} beim Rundenturnier. Wer nur die Spitze braucht, braucht weniger Partien, und dort ist der Vorsprung am größten.")
+                    f"Information-Regel, {de(t['Rundenturnier']['winner'])} beim Rundenturnier. Beim Sieger ist der Abstand der Information-Regel zum Rundenturnier am größten, aber mit 60 Läufen nicht gesichert.")

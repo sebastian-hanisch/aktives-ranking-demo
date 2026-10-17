@@ -2,7 +2,7 @@
 Sebastian Hanisch - Operations Research und Machine Learning
 
 Zwölftes Stück der Ranking-Linie: Statt einen festen Spielplan abzuarbeiten, wählt die aktive Paarung die nächste Partie nach der Unsicherheit der Rangfolge. Sechs Experimente messen,
-wie viele Partien das spart (gegen Rundenturnier, zufällige Paarung und ein vereinfachtes Schweizer System), warum die naive Regel das Budget verschwendet, wann es nichts zu
+wie viele Partien das spart (gegen Rundenturnier, zufällige Paarung und ein vereinfachtes Schweizer System), warum die naive Regel die Partien konzentriert, wann es kaum etwas zu
 gewinnen gibt und was parallele Runden kosten. Aufbau und Regeln: DEMO-PLAYBOOK.md (§2).
 
 Lauffähig mit: streamlit run app.py
@@ -68,7 +68,7 @@ st.markdown(
     """
 Ein fester Spielplan spielt jedes Paar gleich oft, obwohl manche Paare nach wenigen Partien klar entschieden sind und andere nicht. Das **aktive Ranking** wählt die nächste Partie
 nach der **Unsicherheit der Rangfolge**. Diese Demo ist das **zwölfte Stück der Ranking-Linie** und misst, **wie viele Partien das spart** gegen das Rundenturnier, die zufällige
-Paarung und ein **vereinfachtes Schweizer System**, warum die naheliegende Regel das Budget **verschwendet** und wann es **nichts zu gewinnen** gibt.
+Paarung und ein **vereinfachtes Schweizer System**, warum die naheliegende Regel die Partien **konzentriert** und wann es **kaum etwas zu gewinnen** gibt.
 
 Weiter unten: sechs **🔬 Experimente** mit Verdikt, **🚧 Wo die Annahmen enden** und der Expander **📐 Mathematische Formulierung**.
 """
@@ -79,7 +79,7 @@ with st.expander("Wer spielt als Nächstes?", expanded=True):
         """
 1. **Schätzen:** Nach jeder Partie wird eine Stärke je Spieler geschätzt (Bradley-Terry mit Regularisierung) und eine **Unsicherheit** dazu (Laplace-Näherung).
 2. **Fehlordnung:** Für jedes Paar die Wahrscheinlichkeit, dass seine Reihenfolge falsch ist: klein bei großem Abstand und kleiner Unsicherheit. Die naive Regel spielt immer das
-   Paar mit der größten Fehlordnungswahrscheinlichkeit, und das sind oft zwei Spieler, die sich nie trennen lassen.
+   Paar mit der größten Fehlordnungswahrscheinlichkeit, und das sind zwei Spieler, die sich nur schwer trennen lassen.
 3. **Information:** Die bessere Regel gewichtet die Unsicherheit der Differenz mit der Ungewissheit des Ausgangs, p (1 − p): Ein Paar bringt wenig, wenn der Ausgang fast sicher ist
    oder wenn die Differenz schon genau bekannt ist.
 4. **Vergleichsmaßstab:** das feste **Rundenturnier**, die **zufällige** Paarung und ein **vereinfachtes Schweizer System** (nach Punkten sortiert, Nachbarn, möglichst keine
@@ -207,7 +207,7 @@ st.markdown(
 | Annahme | Was passiert, wenn sie verletzt ist | Wer setzt an |
 |---|---|---|
 | **Die Stärken sind transitiv** | Mit Zyklen ist „richtige Rangfolge“ nicht eindeutig; die Paarwahl nach einer Skala kann dieselben Paare immer wieder spielen. | Nicht-Transitivität |
-| **Es gibt etwas zu trennen** | Bei engem Feld gewinnt die aktive Paarung nichts (Experiment 4); die Fehlordnungsregel liegt dort sogar hinter der zufälligen Paarung (Experiment 4, Konzentration in Experiment 3). | – |
+| **Es gibt etwas zu trennen** | Bei engem Feld ist in 60 Läufen kein Vorsprung der aktiven Paarung messbar (Experiment 4); die Fehlordnungsregel liegt dort sogar hinter der zufälligen Paarung (Experiment 4, Konzentration in Experiment 3). | – |
 | **Ergebnisse sind sofort bekannt** | Parallele Runden kosten Partien (Experiment 5); echte Turniere spielen Runden. | – |
 | **Nur Sieg und Niederlage** | Eine Punktedifferenz oder ein Remis trägt mehr Information je Partie; hier nicht gemessen. | Tore, Remis, Heimvorteil |
 | **Das Schweizer System ist vereinfacht** | Der Vergleichsmaßstab sortiert nach Punkten und meidet Wiederholungen, ohne die Regeln der FIDE (Farbe, Schwimmer, Freilos). | Schweizer System |

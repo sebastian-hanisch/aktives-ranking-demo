@@ -243,8 +243,8 @@ sortiert; jeder freie Spieler gegen den nächsten freien, bevorzugt gegen einen,
 **Zufall.** SplitMix64-Strom des Generators; Ausgänge und Gleichstandsbrecher in fester Anordnung je Partie, damit alle Strategien dieselben Würfe sehen.
 
 **Literatur.**
-- Maystre, L., Grossglauser, M. (2017): Just sort it! A simple and effective approach to active preference learning. *ICML 2017* (nicht eingesehen).
-- Jamieson, K. G., Nowak, R. (2011): Active ranking using pairwise comparisons. *Advances in Neural Information Processing Systems 24* (nicht eingesehen).
+- Maystre, L., Grossglauser, M. (2017): Just sort it! A simple and effective approach to active preference learning. *ICML 2017* (eingesehen 2026-10-17, arXiv-Fassung 1502.05556v2, Abschnitte 4.1 und 4.3: Die Unsicherheitsstichprobe wählt das Paar mit dem kleinsten Abstand der Schätzwerte und konzentriert sich mit wachsender Partienzahl auf wenige schwer trennbare Paare; die Paarwahlregeln dieser Demo sind nicht die Regeln der Arbeit).
+- Jamieson, K. G., Nowak, R. (2011): Active ranking using pairwise comparisons. *Advances in Neural Information Processing Systems 24* (eingesehen 2026-10-17, arXiv-Fassung 1109.3701v2, Zusammenfassung, Abschnitte 1 und 5: Rahmen ist die Einbettung der Objekte in $\mathbb{R}^d$, bei Fehlern mit dauerhafter Wirkung („persistent errors“), nicht das Bradley-Terry-Modell; die Demo übernimmt daraus keine Formel).
 - Glickman, M. E., Jensen, S. T. (2005): Adaptive paired comparison design. *Journal of Statistical Planning and Inference* 127, 279–293 (nicht eingesehen).
 - Steele, G. L., Lea, D., Flood, C. H. (2014): Fast splittable pseudorandom number generators. *OOPSLA 2014*, 453–472 (Zufallsstrom des Generators).
         """
